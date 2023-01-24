@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from "react";
+import BaseArtist from "./BaseArtist";
 
 import CardsResults from "./CardsResults";
+import RelatedArtists from "./RelatedArtists";
 import SearchForm from "./SearchForm";
+import TopTracks from "./TopTracks";
 
 const CLIENT_ID = "80e4b90e2c8c4e85bedb4ae39ec397bb";
 const CLIENT_SECRET = "6fc1e429cac346b999f994891eb96fbd";
 
 function App() {
   const [accessToken, setAccessToken] = useState("");
+  const [searchParams, setSearchParams] = useState({});
   const [searchInput, setSearchInput] = useState("");
+  // const [base, setBase] = useState();
+  const [relatedArt, setRelatedArt] = useState([]);
+  const [artistID, setArtistID] = useState();
   const [albums, setAlbums] = useState([]);
+  const [tracks, setTracks] = useState([]);
+  const [tracksToHear, setTracksToHear] = useState([]);
+  console.log(tracksToHear);
+  const [ids, setIds] = useState([]);
+  // useEffect(() => {
+  //   const newIds = relatedArt.map((item) => item.id);
+  //   setIds(newIds.reverse());
+  // }, [relatedArt]);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -36,39 +51,57 @@ function App() {
   //Searhing
 
   const search = async () => {
-    console.log("Search for:  " + searchInput); // insert artist
-
     // get ArtistID
-
-    const searchParams = {
+    setTracks([]);
+    setSearchParams({
       method: "GET",
       headers: {
         "Content-type": "application/json",
         Authorization: "Bearer " + accessToken,
       },
-    };
+    });
 
     const artistID = await fetch(
       "https://api.spotify.com/v1/search?q=" + searchInput + "&type=artist",
       searchParams
     )
+      .then(setArtistID())
       .then((result) => result.json())
       .then((data) => {
-        return data.artists.items[0].id;
+        setArtistID(data.artists.items[0].id);
       });
-
-    // get albums using artisID
-    const albums = await fetch(
-      "https://api.spotify.com/v1/artists/" +
-        artistID +
-        "/albums" +
-        "?include_groups=album&market=US&limit=50",
-      searchParams
-    )
-      .then((result) => result.json())
-      .then((data) => setAlbums(data.items));
   };
-  console.log(albums);
+  // console.log(tracks);
+  // console.log(albums);
+  useEffect(() => {
+    // get albums using artisID
+    const albums = async () =>
+      artistID &&
+      (await fetch(
+        "https://api.spotify.com/v1/artists/" +
+          artistID +
+          "/albums" +
+          "?include_groups=album&market=US&limit=50",
+        searchParams
+      )
+        .then((result) => result.json())
+        .then((data) => setAlbums(data.items)));
+    // get top tracks using artisID
+
+    const tracks = async () =>
+      artistID &&
+      (await fetch(
+        "https://api.spotify.com/v1/artists/" +
+          artistID +
+          "/top-tracks" +
+          "?include_groups=album&market=US",
+        searchParams
+      )
+        .then((result) => result.json())
+        .then((data) => setTracks(data.tracks)));
+    albums();
+    tracks();
+  }, [artistID]);
 
   return (
     <>
@@ -76,6 +109,17 @@ function App() {
         searchInput={searchInput}
         setSearchInput={setSearchInput}
         handleSubmit={handleSubmit}
+      />
+      <BaseArtist
+        artistID={artistID}
+        searchParams={searchParams}
+        accessToken={accessToken}
+      />
+      {/* <TopTracks tracks={tracks} /> */}
+      <RelatedArtists
+        artistID={artistID}
+        searchParams={searchParams}
+        accessToken={accessToken}
       />
       <CardsResults albums={albums} />
     </>
