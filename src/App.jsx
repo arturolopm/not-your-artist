@@ -21,6 +21,7 @@ function App() {
   const [tracksToHear, setTracksToHear] = useState([]);
   console.log(tracksToHear);
   const [ids, setIds] = useState([]);
+  const [searchNumber, setSearchNumber] = useState(0);
   // useEffect(() => {
   //   const newIds = relatedArt.map((item) => item.id);
   //   setIds(newIds.reverse());
@@ -29,6 +30,7 @@ function App() {
   function handleSubmit(event) {
     event.preventDefault();
     search();
+    setSearchNumber(searchNumber + 1);
   }
   useEffect(() => {
     //Access token
@@ -53,6 +55,7 @@ function App() {
   const search = async () => {
     // get ArtistID
     setTracks([]);
+
     setSearchParams({
       method: "GET",
       headers: {
@@ -65,7 +68,6 @@ function App() {
       "https://api.spotify.com/v1/search?q=" + searchInput + "&type=artist",
       searchParams
     )
-      .then(setArtistID())
       .then((result) => result.json())
       .then((data) => {
         setArtistID(data.artists.items[0].id);
@@ -120,6 +122,7 @@ function App() {
         artistID={artistID}
         searchParams={searchParams}
         accessToken={accessToken}
+        searchNumber={searchNumber}
       />
       <CardsResults albums={albums} />
     </>

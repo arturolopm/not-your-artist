@@ -1,22 +1,7 @@
 import { useState, useEffect } from "react";
 import useGetSong from "./hooks/UseGetSong";
 
-function RelatedArtists({ artistID, searchParams, accessToken }) {
-  // const useGetSong = async (id) => {
-  //   const tracksRelated = await fetch(
-  //     "https://api.spotify.com/v1/artists/" +
-  //       id +
-  //       "/top-tracks" +
-  //       "?include_groups=album&market=US",
-  //     searchParams
-  //   )
-  //     .then((result) => result.json())
-  //     .then((data) => {
-  //       let rand = Math.floor(Math.random() * 10);
-  //       return data.tracks[rand];
-  //     });
-  //   return tracksRelated;
-  // };
+function RelatedArtists({ artistID, searchParams, searchNumber }) {
   const [showTracksToHear, setShowTracksToHear] = useState([]);
   console.log(showTracksToHear);
   const [relatedArt, setRelatedArt] = useState([]);
@@ -33,7 +18,7 @@ function RelatedArtists({ artistID, searchParams, accessToken }) {
         .then((data) => setRelatedArt(data.artists));
 
     Related();
-  }, [artistID]);
+  }, [artistID, searchNumber]);
 
   useEffect(() => {
     if (relatedArt) {
@@ -44,7 +29,10 @@ function RelatedArtists({ artistID, searchParams, accessToken }) {
         return useGetSong(item, searchParams);
       });
       Promise.all(promises).then((tracksToHear) => {
-        setShowTracksToHear(tracksToHear);
+        const filtered = tracksToHear.filter(function (x) {
+          return x !== undefined;
+        });
+        setShowTracksToHear(filtered);
       });
     }
   }, [relatedArt]);
@@ -60,7 +48,9 @@ function RelatedArtists({ artistID, searchParams, accessToken }) {
             ? ""
             : showTracksToHear.map((track, i) => {
                 return (
-                  <div
+                  <a
+                    href={`${track.external_urls.spotify}`}
+                    target="_blank"
                     key={i}
                     className=" flex mb-1 border-2 ">
                     {track.album && (
@@ -69,13 +59,15 @@ function RelatedArtists({ artistID, searchParams, accessToken }) {
                         alt=""
                       />
                     )}
-                    <div className=" flex justify-center">
+                    <div className=" flex justify-center ">
                       <h2 className=" p-1 ">{track.name}</h2>
-                      <h2 className=" p-1 ">{track.artists[0].name}</h2>
+                      <h2 className=" p-1 border-2 rounded-lg my-auto ">
+                        {track.artists[0].name}
+                      </h2>
                     </div>
                     {track.preview_url != null && (
                       <audio
-                        className=" ml-auto "
+                        className=" ml-auto p-1 "
                         controls>
                         <source
                           src={`${track.preview_url}`}
@@ -83,7 +75,7 @@ function RelatedArtists({ artistID, searchParams, accessToken }) {
                         />
                       </audio>
                     )}
-                  </div>
+                  </a>
                 );
               })}
         </div>

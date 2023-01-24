@@ -23,7 +23,7 @@ function BaseArtist({ artistID, accessToken }) {
         .then((data) => setBase(data)));
     base();
   }, [artistID]);
-
+  console.log(base);
   return (
     <>
       {base ? (
@@ -31,10 +31,12 @@ function BaseArtist({ artistID, accessToken }) {
           <div className=" text-center">Base Artist</div>
           <div className=" flex justify-center p-2">
             <div className=" mb-2 mx-auto border-2">
-              <img
-                src={base.images[2].url}
-                alt=""
-              />
+              {typeof base.images[1].url != "undefined" && (
+                <img
+                  src={base.images[1].url}
+                  alt=""
+                />
+              )}
 
               <div className=" flex justify-center">
                 <h2 className=" text-clip overflow-hidden ...">{base.name}</h2>
