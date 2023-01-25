@@ -31,9 +31,9 @@ function BaseArtist({ artistID, accessToken }) {
           <div className=" text-center">Base Artist</div>
           <div className=" flex justify-center p-2">
             <div className=" mb-2 mx-auto border-2">
-              {typeof base.images[1].url != "undefined" && (
+              {typeof base.images[2].url != "undefined" && (
                 <img
-                  src={base.images[1].url}
+                  src={base.images[2].url}
                   alt=""
                 />
               )}
@@ -45,7 +45,7 @@ function BaseArtist({ artistID, accessToken }) {
           </div>
         </>
       ) : (
-        <h2>This will not be your artist</h2>
+        <div className=" text-center">This will not be your artist</div>
       )}
     </>
   );

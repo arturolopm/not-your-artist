@@ -6,7 +6,7 @@ function CardsResults({ albums }) {
       <div className=" flex justify-center p-2">
         <div className=" container grid grid-cols-2 md:grid-cols-4">
           {albums.length === 0 ? (
-            <h2>Search for something</h2>
+            <div className=" text-center col-span-4">Search for something</div>
           ) : (
             albums.map((album, i) => {
               return (

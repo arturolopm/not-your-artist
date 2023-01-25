@@ -28,6 +28,7 @@ function App() {
   // }, [relatedArt]);
 
   function handleSubmit(event) {
+    event.target[0].blur();
     event.preventDefault();
     search();
     setSearchNumber(searchNumber + 1);
@@ -106,7 +107,7 @@ function App() {
   }, [artistID]);
 
   return (
-    <>
+    <div className=" min-h-screen min-w-full overflow-x-hidden backdrop-blur-xl bg-black/10  text-white">
       <SearchForm
         searchInput={searchInput}
         setSearchInput={setSearchInput}
@@ -117,7 +118,6 @@ function App() {
         searchParams={searchParams}
         accessToken={accessToken}
       />
-      {/* <TopTracks tracks={tracks} /> */}
       <RelatedArtists
         artistID={artistID}
         searchParams={searchParams}
@@ -125,7 +125,7 @@ function App() {
         searchNumber={searchNumber}
       />
       <CardsResults albums={albums} />
-    </>
+    </div>
   );
 }
 
