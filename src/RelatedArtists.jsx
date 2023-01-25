@@ -3,11 +3,12 @@ import useGetSong from "./hooks/UseGetSong";
 
 function RelatedArtists({ artistID, searchParams, searchNumber }) {
   const [showTracksToHear, setShowTracksToHear] = useState([]);
-  console.log(showTracksToHear);
+
   const [relatedArt, setRelatedArt] = useState([]);
   useEffect(() => {
     const Related = async () =>
-      await fetch(
+      typeof artistID != "undefined" &&
+      (await fetch(
         "https://api.spotify.com/v1/artists/" +
           artistID +
           "/related-artists" +
@@ -15,7 +16,7 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
         searchParams
       )
         .then((result) => result.json())
-        .then((data) => setRelatedArt(data.artists));
+        .then((data) => setRelatedArt(data.artists)));
 
     Related();
   }, [artistID, searchNumber]);
@@ -38,29 +39,33 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
   }, [relatedArt]);
 
   return (
-    <>
+    <div className=" container">
       {showTracksToHear.length > 0 && (
-        <div className=" text-center">top tracksToHear</div>
+        <div className=" text-center">
+          {" "}
+          tracks that you should definetly should hear if you liked this
+        </div>
       )}
-      <div className=" flex justify-center p-2">
+      <div className=" mx-auto  flex justify-center p-2">
         <div className=" container flex flex-col">
           {showTracksToHear.length === 0
             ? ""
             : showTracksToHear.map((track, i) => {
                 return (
-                  <div className=" flex mb-1 border-2 ">
+                  <div
+                    key={i}
+                    className=" flex mb-1 border-2 ">
                     <a
                       className=" flex  "
                       href={`${track.external_urls.spotify}`}
-                      target="_blank"
-                      key={i}>
+                      target="_blank">
                       {track.album && (
                         <img
                           src={track.album.images[2].url}
                           alt=""
                         />
                       )}
-                      <div className=" w-2/3 flex justify-start md:justify-center ">
+                      <div className=" max-w-[60%] flex justify-start md:justify-center ">
                         <h2 className=" p-1 my-auto text-left ">
                           {track.name}
                         </h2>
@@ -71,7 +76,7 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
                     </a>
                     {track.preview_url != null && (
                       <audio
-                        className=" max-w-[30%] ml-auto p-1 "
+                        className=" max-w-[35%] ml-auto p-1 text-xs "
                         controls>
                         <source
                           src={`${track.preview_url}`}
@@ -84,7 +89,7 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
               })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

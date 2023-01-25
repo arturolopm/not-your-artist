@@ -25,13 +25,6 @@ function SearchForm(props) {
         </form>
       </div>
       <hr className=" block border-[1px]" />
-      {/* <div className=" -z-10 absolute">
-        <img
-          src="/15.jpg"
-          alt=""
-          srcset=""
-        />
-      </div> */}
     </>
   );
 }

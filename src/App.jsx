@@ -12,27 +12,57 @@ const CLIENT_SECRET = "6fc1e429cac346b999f994891eb96fbd";
 function App() {
   const [accessToken, setAccessToken] = useState("");
   const [searchParams, setSearchParams] = useState({});
-  const [searchInput, setSearchInput] = useState("");
-  // const [base, setBase] = useState();
-  const [relatedArt, setRelatedArt] = useState([]);
+  const [searchInput, setSearchInput] = useState();
   const [artistID, setArtistID] = useState();
   const [albums, setAlbums] = useState([]);
   const [tracks, setTracks] = useState([]);
-  const [tracksToHear, setTracksToHear] = useState([]);
-  console.log(tracksToHear);
-  const [ids, setIds] = useState([]);
-  const [searchNumber, setSearchNumber] = useState(0);
-  // useEffect(() => {
-  //   const newIds = relatedArt.map((item) => item.id);
-  //   setIds(newIds.reverse());
-  // }, [relatedArt]);
 
+  const [searchNumber, setSearchNumber] = useState(0);
+  console.log(searchNumber, "Attempt");
   function handleSubmit(event) {
     event.target[0].blur();
     event.preventDefault();
-    search();
+
     setSearchNumber(searchNumber + 1);
   }
+  useEffect(() => {
+    const search = async () => {
+      // get ArtistID
+      setTracks([]);
+      setSearchParams({
+        method: "GET",
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + accessToken,
+        },
+      });
+
+      const getArtistID =
+        searchInput &&
+        (await fetch(
+          "https://api.spotify.com/v1/search?q=" + searchInput + "&type=artist",
+          searchParams
+        ).then((result) => {
+          if (result.status === 200) {
+            // will succeed unless server logic or your logic is off
+            return result.json().then((data) => {
+              setArtistID(data.artists.items[0].id);
+
+              setSearchNumber(0);
+            });
+          } else if (result.status === (400 || 401)) {
+            // will succeed if the server will always respond with JSON with a 400 result
+            return setSearchNumber(searchNumber + 1);
+          }
+          // else {
+          //     // there was some other error in the result, such as status 500
+          //     setErrors(result.statusText);
+          // }
+        }));
+    };
+    search();
+  }, [searchNumber]);
+
   useEffect(() => {
     //Access token
     const authParams = {
@@ -53,29 +83,6 @@ function App() {
 
   //Searhing
 
-  const search = async () => {
-    // get ArtistID
-    setTracks([]);
-
-    setSearchParams({
-      method: "GET",
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + accessToken,
-      },
-    });
-
-    const artistID = await fetch(
-      "https://api.spotify.com/v1/search?q=" + searchInput + "&type=artist",
-      searchParams
-    )
-      .then((result) => result.json())
-      .then((data) => {
-        setArtistID(data.artists.items[0].id);
-      });
-  };
-  // console.log(tracks);
-  // console.log(albums);
   useEffect(() => {
     // get albums using artisID
     const albums = async () =>
@@ -107,7 +114,7 @@ function App() {
   }, [artistID]);
 
   return (
-    <div className=" min-h-screen min-w-full overflow-x-hidden backdrop-blur-xl bg-black/10  text-white">
+    <div className=" container min-h-screen min-w-full max-w-full overflow-x-hidden backdrop-blur-xl bg-black/10  text-white">
       <SearchForm
         searchInput={searchInput}
         setSearchInput={setSearchInput}
