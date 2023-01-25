@@ -39,11 +39,15 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
   }, [relatedArt]);
 
   return (
-    <div className=" container">
+    <div className=" container mx-auto">
       {showTracksToHear.length > 0 && (
-        <div className=" text-center">
+        <div className=" mx-2 text-center">
           {" "}
           tracks that you should definetly should hear if you liked this
+          <p className=" text-xs">
+            Click on the preview button to to hear them or click on the images
+            to listen on spotify
+          </p>
         </div>
       )}
       <div className=" mx-auto  flex justify-center p-2">
@@ -54,9 +58,9 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
                 return (
                   <div
                     key={i}
-                    className=" flex mb-1 border-2 ">
+                    className=" flex mb-1 border-2 justify-between ">
                     <a
-                      className=" flex  "
+                      className=" flex items-center "
                       href={`${track.external_urls.spotify}`}
                       target="_blank">
                       {track.album && (
@@ -65,16 +69,16 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
                           alt=""
                         />
                       )}
-                      <div className=" max-w-[60%] flex justify-start md:justify-center ">
-                        <h2 className=" p-1 my-auto text-left ">
+                      <div className=" text-xs md:text-base max-w-[60%] flex justify-start md:justify-center ">
+                        <h2 className=" underline underline-offset-2  p-1 my-auto text-left ">
                           {track.name}
                         </h2>
-                        <h2 className=" p-1 border-2 rounded-lg my-auto ">
+                        <h2 className="   p-1 border-2 rounded-lg my-auto ">
                           {track.artists[0].name}
                         </h2>
                       </div>
                     </a>
-                    {track.preview_url != null && (
+                    {track.preview_url != null ? (
                       <audio
                         className=" max-w-[35%] ml-auto p-1 text-xs "
                         controls>
@@ -83,6 +87,14 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
                           type="audio/mp3"
                         />
                       </audio>
+                    ) : (
+                      <a
+                        className=" underline underline-offset-2  max-w-[35%] text-right text-xs mr-1 md:text-sm"
+                        href={`${track.external_urls.spotify}`}
+                        target="_blank">
+                        {" "}
+                        Preview not available, click here to listen on spotify
+                      </a>
                     )}
                   </div>
                 );

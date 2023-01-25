@@ -45,7 +45,7 @@ You can find the code for the app in the `src` directory. The entry point for th
 
 The app uses the Spotify Web API to fetch data. You'll need to provide your own `CLIENT_ID` and `CLIENT_SECRET` in `src/App.js` to be able to use the API.
 
-You can get your owns at:
+I upload my `CLIENT_ID` and `CLIENT_SECRET` on purpose so you can try a few request fast if you want to check out my project, if you will make your own project you can get your owns at, it is fast and free:
 https://developer.spotify.com/dashboard/applications
 
 The app uses functional components and hooks (useState and useEffect) for managing state and side effects.

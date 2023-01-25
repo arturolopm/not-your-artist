@@ -35,13 +35,14 @@ function BaseArtist({ artistID, accessToken }) {
             <div className=" mb-2 mx-auto border-2">
               {typeof base.images[2].url != "undefined" && (
                 <img
+                  className=" mt-1 mx-auto"
                   src={base.images[2].url}
                   alt=""
                 />
               )}
 
               <div className=" flex justify-center">
-                <h2 className=" text-clip overflow-hidden ...">{base.name}</h2>
+                <h2 className=" mx-1 ">{base.name}</h2>
               </div>
             </div>
           </div>
