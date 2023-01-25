@@ -27,6 +27,7 @@ npm install
 ## Technologies used
 
 - React
+- Tailwind
 - Spotify Web API
 
 ## Known issues
