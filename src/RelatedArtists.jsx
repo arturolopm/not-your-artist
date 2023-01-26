@@ -43,7 +43,7 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
       {showTracksToHear.length > 0 && (
         <div className=" mx-2 text-center">
           {" "}
-          tracks that you should definetly should hear if you liked this
+          tracks that you should definetly hear if you liked this
           <p className=" text-xs">
             Click on the preview button to to hear them or click on the images
             to listen on spotify
