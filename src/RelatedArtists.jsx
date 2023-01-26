@@ -69,7 +69,7 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
                           alt=""
                         />
                       )}
-                      <div className=" text-xs md:text-base max-w-[60%] flex justify-start md:justify-center ">
+                      <div className=" text-xs md:text-base max-w-[60%] md:text-right flex justify-start  ">
                         <h2 className=" underline underline-offset-2  p-1 my-auto text-left ">
                           {track.name}
                         </h2>
