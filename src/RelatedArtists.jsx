@@ -70,10 +70,14 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
                         />
                       )}
                       <div className=" text-xs md:text-base max-w-[60%] md:text-right flex justify-start  ">
-                        <h2 className=" underline underline-offset-2  p-1 my-auto text-left ">
+                        <h2
+                          translate="no"
+                          className=" underline underline-offset-2  p-1 my-auto text-left ">
                           {track.name}
                         </h2>
-                        <h2 className="   p-1 border-2 rounded-lg my-auto ">
+                        <h2
+                          translate="no"
+                          className="   p-1 border-2 rounded-lg my-auto ">
                           {track.artists[0].name}
                         </h2>
                       </div>

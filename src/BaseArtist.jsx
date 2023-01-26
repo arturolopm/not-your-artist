@@ -33,13 +33,14 @@ function BaseArtist({ artistID, accessToken }) {
           <div className=" text-center font-bold">Base Artist</div>
           <div className=" flex justify-center p-2">
             <div className=" mb-2 mx-auto border-2">
-              {typeof base.images[2].url != "undefined" && (
-                <img
-                  className=" mt-1 mx-auto"
-                  src={base.images[2].url}
-                  alt=""
-                />
-              )}
+              {base.images.length > 0 &&
+                typeof base.images[2].url != "undefined" && (
+                  <img
+                    className=" mt-1 mx-auto"
+                    src={base.images[2].url}
+                    alt=""
+                  />
+                )}
 
               <div className=" flex justify-center">
                 <h2 className=" mx-1 ">{base.name}</h2>
