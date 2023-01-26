@@ -43,10 +43,10 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
       {showTracksToHear.length > 0 && (
         <div className=" mx-2 text-center">
           {" "}
-          tracks that you should definetly hear if you liked this
+          Tracks that you should definetly hear if you liked this
           <p className=" text-xs">
-            Click on the preview button to to hear them or click on the images
-            to listen on spotify
+            Click on the preview button to hear them or click on the images to
+            listen on spotify
           </p>
         </div>
       )}
@@ -105,6 +105,13 @@ function RelatedArtists({ artistID, searchParams, searchNumber }) {
               })}
         </div>
       </div>
+      {showTracksToHear.length > 0 && (
+        <div className=" mx-auto text-center mb-2">
+          {" "}
+          If you search the same artist again you will have some different
+          tracks
+        </div>
+      )}
     </div>
   );
 }
