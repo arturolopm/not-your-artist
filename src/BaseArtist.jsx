@@ -32,7 +32,7 @@ function BaseArtist({ artistID, accessToken }) {
         <>
           <div className=" text-center font-bold">Base Artist</div>
           <div className=" flex justify-center p-2">
-            <div className=" mb-2 mx-auto border-2">
+            <div className=" mb-2 mx-auto bg-black/25 border-2">
               {base.images.length > 0 &&
                 typeof base.images[2].url != "undefined" && (
                   <img
@@ -50,6 +50,7 @@ function BaseArtist({ artistID, accessToken }) {
         </>
       ) : (
         <div className=" font-bold text-center">
+          <h1>The fastest way to discover music</h1>
           This will not be your artist
         </div>
       )}

@@ -16,7 +16,7 @@ function CardsResults({ albums }) {
                   href={`${album.external_urls.spotify}`}
                   target="_blank"
                   key={i}>
-                  <div className="  mb-2 border-2">
+                  <div className=" bg-black/25 mb-2 border-2">
                     <img
                       src={album.images[0].url}
                       alt=""

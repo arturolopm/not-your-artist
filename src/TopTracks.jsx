@@ -2,7 +2,7 @@ const TopTracks = ({ tracks }) => {
   return (
     <>
       {tracks.length > 0 && (
-        <div className=" text-center">top tracks from this Artist</div>
+        <div className=" text-center text-lg">top tracks from this Artist</div>
       )}
       <div className=" flex justify-center p-2">
         <div className=" container flex flex-col">
