@@ -132,6 +132,7 @@ function App() {
         searchNumber={searchNumber}
       />
       <CardsResults albums={albums} />
+      <TopTracks tracks={tracks} />
     </div>
   );
 }
